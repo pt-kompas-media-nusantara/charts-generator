@@ -1,0 +1,71 @@
+extends ./_layout.jade
+
+block vars
+  - var page_title = "Penghasil Bagan - Batang";
+  - var page_name = "balok";
+
+block content
+  include ./includes/menu-top.jade
+  div#bar-chart.container-fluid
+    div.row
+      include ./includes/menu-side-left.jade
+
+      div.col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+        
+        div.col-md-12.col-sm-12
+          h1 Bagan Balok
+        div.col-md-6.col-sm-6
+          
+          form.form-horizontal
+            div.form-group
+              div.col-md-12.col-sm-12
+                label.control-label(for="chart-title") Judul
+                input.form-control(type="text", id="chart-title", name="chart-title" placeholder="Judul Bagan", maxlength="100")
+            
+            div.form-group
+              div.col-md-6.col-sm-6.col-xs-6
+                label.control-label(for="chart-width") Lebar (piksel)
+                input.form-control(type="text", id="chart-width", placeholder="Berupa angka, dalam satuan piksel", maxlength="3", value="630")
+              div.col-md-6.col-sm-6.col-xs-6
+                label.control-label(for="chart-height") Tinggi (piksel)
+                input.form-control(type="text", id="chart-height", placeholder="Berupa angka, dalam satuan piksel", maxlength="3", value="354")
+            
+            div.form-group
+              div.col-md-12.col-sm-12.col-xs-12
+                label.control-label Tabel Data
+               div.col-md-6.col-sm-6.col-xs-6
+                input.form-control(type="text", id="chart-column-name-1", placeholder="Nama kolom 1", maxlength="25")
+               div.col-md-6.col-sm-6.col-xs-6
+                input.form-control(type="text", id="chart-column-name-2", placeholder="Nama kolom 2", maxlength="25")
+            
+            div.form-group
+              div.col-md-6.col-sm-6.col-xs-6
+                input.form-control.inputDataName(type="text", placeholder="Nama data", maxlength="25")
+              div.col-md-6.col-sm-6.col-xs-6
+                input.form-control.inputDataNum(type="text", placeholder="Angka", maxlength="255")
+
+            div#new-table-row
+                
+            div.form-group
+              div.col-md-12.col-sm-12.col-xs-12.txt-right
+                a#btn-add-table-row(href="#") Tambah baris data
+                
+            div.form-group
+              div.col-md-12.col-sm-12.col-xs-12.txt-right
+                button#btn-submit.btn.btn-primary(type="submit") Bikin Kodenya
+                button.btn.btn-warning(type="reset") Setel Ulang
+
+            div.form-group
+              div.col-md-12.col-sm-12.col-xs-12
+                h2 Salin kode berikut:
+              div.col-md-12.col-sm-12.col-xs-12
+                textarea#chart-code.form-control
+            //- div.form-group
+            //-   div.col-md-12.col-sm-12.col-xs-12.txt-right
+            //-     button.btn.btn-success(type="submit") Salin Kode
+          
+        div.col-md-6.col-sm-6
+          p Hasilnya di sini
+
+            
+
