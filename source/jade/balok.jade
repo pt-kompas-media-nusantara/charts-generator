@@ -25,7 +25,7 @@ block content
             div.form-group
               div.col-md-6.col-sm-6.col-xs-6
                 label.control-label(for="chart-width") Lebar (piksel)
-                input.form-control(type="text", id="chart-width", placeholder="Berupa angka, dalam satuan piksel", maxlength="3", value="630")
+                input.form-control(type="text", id="chart-width", placeholder="Berupa angka, dalam satuan piksel", maxlength="3", value="630", disabled)
               div.col-md-6.col-sm-6.col-xs-6
                 label.control-label(for="chart-height") Tinggi (piksel)
                 input.form-control(type="text", id="chart-height", placeholder="Berupa angka, dalam satuan piksel", maxlength="3", value="354")
@@ -64,8 +64,8 @@ block content
             //-   div.col-md-12.col-sm-12.col-xs-12.txt-right
             //-     button.btn.btn-success(type="submit") Salin Kode
           
-        div.col-md-6.col-sm-6
-          p Hasilnya di sini
+        div#result.col-md-6.col-sm-6
+          //- p Hasilnya di sini
 
             
 

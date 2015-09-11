@@ -1,10 +1,50 @@
 /*jslint vars: true, plusplus: true, devel: true, nomen: true, maxerr: 50, regexp: true, browser: true, white: true */
 /*global $, google */
+google.load('visualization', '1', { 'packages' : ['corechart'] });
+
+// preview bar chart
+function initializeBarChart() {
+	$('#btn-submit').on('click', function () {
+		var data, options, barChart,
+			dataName = [],
+			dataNum = [],
+			i,
+			dataLen;
+
+		$('.inputDataName').each(function () {
+			if ($(this) !== '') {
+				dataName.push($(this).val().trim());
+			}
+		});
+
+		$('.inputDataNum').each(function () {
+			if ($(this) !== '') {
+				dataNum.push(parseInt($(this).val().trim(), 10));
+			}
+		});
+
+		dataLen = dataName.length;
+
+		data = new google.visualization.DataTable();
+		data.addColumn('string', $('#chart-column-name-1').val().trim());
+		data.addColumn('number', $('#chart-column-name-2').val().trim());
+
+		for (i = 0; i < dataLen; i++) {
+			data.addRows([ [ dataName[i], dataNum[i] ] ]);
+		}
+				
+		options = { 'title' : $('#chart-title').val().trim(), 'width': $('#chart-width').val().trim(), 'height': $('#chart-height').val().trim() };
+			
+		barChart = new google.visualization.BarChart(document.getElementById('result'));
+		barChart.draw(data, options);
+	});
+}
 
 $(document).ready(function () {
 	'use strict';
 	// bar chart
 	if($('#bar-chart').length) {
+
 		// add new row button
 		$('#btn-add-table-row').on('click', function (e) {
 			e.preventDefault();
@@ -119,7 +159,7 @@ $(document).ready(function () {
 				strData += '[\'' + arrDataName[i] + '\', ' + arrDataNum[i] + '],';
 			}
 
-			console.log(strData.substring(0, strData.length-1));
+			// console.log(strData.substring(0, strData.length-1));
 			// console.log(arrDataNum);
 
 
@@ -150,13 +190,21 @@ $(document).ready(function () {
 
 			$('#chart-code').text(str).css('overflow', 'hidden');
 
+			
+			
+
 			window.setTimeout(function () {
 				var contentHeight = $('#chart-code')[0].scrollHeight;
 				$('#chart-code').height(contentHeight-15);
 				$('#chart-code').select();
+				// preview();
 			}, 1);
-		});
 
+			// preview();
+		});
+	
 		
+
+		google.setOnLoadCallback(initializeBarChart);
 	}
 });
