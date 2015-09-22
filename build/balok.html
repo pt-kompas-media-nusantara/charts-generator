@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Penghasil bagan untuk editor Desk Multimedia Harian Kompas - Chart generator for multimedia editors of Kompas Daily, Indonesia">
+    <meta name="author" content="Yosef Yudha Wijaya - https://github.com/gajayana">
+    <title>Penghasil Bagan - Batang</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" class="navbar-toggle collapsed"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="index.html" class="navbar-brand">Penghasil Bagan</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/harian-kompas/chart-generator" target="_blank">Github</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div id="bar-chart" class="container-fluid">
+      <div class="row">
+        <div class="col-sm-2 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="index.html">index</a></li>
+            <li class="active"><a href="balok.html">balok<span class="sr-only">(current)</span></a></li>
+            <li><a href="kolom.html">kolom</a></li>
+            <li><a href="pai.html">pai</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-10 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div class="col-md-12 col-sm-12">
+            <h1>Bagan Balok</h1>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <form class="form-horizontal">
+              <h4>Info</h4>
+              <div class="form-group">
+                <div class="col-md-12 col-sm-12">
+                  <label for="chart-title" class="control-label">Judul</label>
+                  <input type="text" id="chart-title" name="chart-title" placeholder="Judul Bagan" maxlength="100" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 col-sm-12">
+                  <label for="chart-data-source" class="control-label">Sumber Data</label>
+                  <input type="text" id="chart-data-source" name="chart-data-source" placeholder="Sumber data" maxlength="100" class="form-control">
+                </div>
+              </div>
+              <h4>Dimensi</h4>
+              <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                  <label for="chart-width" class="control-label">Lebar (piksel)</label>
+                  <input type="text" id="chart-width" placeholder="Berupa angka, dalam satuan piksel" maxlength="3" value="630" disabled class="form-control">
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                  <label for="chart-height" class="control-label">Tinggi (piksel)</label>
+                  <input type="text" id="chart-height" placeholder="Berupa angka, dalam satuan piksel" maxlength="3" value="354" class="form-control">
+                </div>
+              </div>
+              <h4>Opsi</h4>
+              <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                  <label class="control-label">Posisi Legenda</label>
+                  <select id="legend-position" class="form-control">
+                    <option value="top">Atas</option>
+                    <option value="bottom">Bawah</option>
+                    <option value="in">Di Dalam</option>
+                    <option value="right">Kanan</option>
+                    <option value="left">Kiri</option>
+                  </select>
+                </div>
+              </div>
+              <h4>Tabel Data</h4>
+              <div id="table-column" class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                  <label class="control-label">Nama Kolom</label>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6 txt-right">
+                  <label class="control-label"> <a id="btn-add-table-column" href="#">Tambah kolom</a>&nbsp;|&nbsp;<a id="btn-remove-table-column" href="#">Kurangi kolom</a></label>
+                </div>
+                <div class="col-flexible col-md-6 col-sm-6 col-xs-6">
+                  <input type="text" maxlength="25" class="form-control table-column-names">
+                </div>
+                <div class="col-flexible col-md-6 col-sm-6 col-xs-6">
+                  <input type="text" maxlength="25" class="form-control table-column-names">
+                </div>
+              </div>
+              <div class="table-rows form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <label class="control-label">Baris Data</label>
+                </div>
+                <div class="col-flexible col-md-6 col-sm-6 col-xs-6">
+                  <input type="text" placeholder="Nama data" maxlength="25" class="form-control table-rows-input">
+                </div>
+                <div class="col-flexible col-md-6 col-sm-6 col-xs-6">
+                  <input type="text" placeholder="Angka" maxlength="255" class="form-control table-rows-input">
+                </div>
+              </div>
+              <div id="new-table-row"></div>
+              <div class="form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12 txt-right"><a id="btn-add-table-row" href="#">Tambah baris data</a></div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12 txt-right">
+                  <button id="btn-submit" type="submit" class="btn btn-primary">Bikin Kodenya</button>
+                  <button type="reset" class="btn btn-warning">Setel Ulang</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <h2>Salin kode berikut:</h2>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <textarea id="chart-code" class="form-control"></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-6 col-sm-6">
+            <div id="result"></div>
+            <p style="display: block; width:100%; font-size: 11px; color: #949494; padding:5px 0; margin:0;"></p>
+            
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" type="text/javascript"></script>
+    <script src="https://www.google.com/jsapi" type="text/javascript"></script>
+    <script src="js/script.js" type="text/javascript"></script>
+  </body>
+</html>

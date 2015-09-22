@@ -42,6 +42,6 @@ Temporary Items
 .apdisk
 
 *.scssc
-*.html
 
+.sass-cache/*
 config.php
