@@ -1,19 +1,19 @@
 extends ./_layout.jade
 
 block vars
-  - var page_title = "Penghasil Bagan - Balok";
-  - var page_name = "balok";
+  - var page_title = "Penghasil Bagan - Pai";
+  - var page_name = "pai";
 
 block content
   include ./includes/menu-top.jade
-  div#bar-chart.container-fluid
+  div#pie-chart.container-fluid
     div.row
       include ./includes/menu-side-left.jade
 
       div.col-sm-10.col-sm-offset-3.col-md-10.col-md-offset-2.main
         
         div.col-md-12.col-sm-12
-          h1 Bagan Balok
+          h1 Bagan Pai
         div.col-md-6.col-sm-6
           
           form.form-horizontal
@@ -43,19 +43,37 @@ block content
                 select#legend-position.form-control
                   option(value="top") Atas
                   option(value="bottom") Bawah
-                  option(value="in") Di Dalam
+                  option(value="labeled") Berlabel
                   option(value="right") Kanan
                   option(value="left") Kiri
             
+            div.form-group
+              div.col-md-4.col-sm-4.col-xs-4
+                div.radio
+                  label
+                    input#isStandard(type="radio", name="pieStyle", checked) 
+                    | Bentuk Standar
+
+              div.col-md-4.col-sm-4.col-xs-4
+                div.radio
+                  label
+                    input#is3D(type="radio", name="pieStyle") 
+                    | Bentuk 3D
+              div.col-md-4.col-sm-4.col-xs-4
+                div.radio
+                  label
+                    input#isDonut(type="radio", name="pieStyle") 
+                    | Bentuk Donat
+
             h4 Tabel Data
             div#table-column.form-group
               div.col-md-6.col-sm-6.col-xs-6
                 label.control-label Nama Kolom
               div.col-md-6.col-sm-6.col-xs-6.txt-right
-                label.control-label 
-                  a#btn-add-table-column(href="#") Tambah kolom
-                  | &nbsp;|&nbsp;
-                  a#btn-remove-table-column(href="#") Kurangi kolom
+                label.control-label &nbsp;
+                //-   a#btn-add-table-column(href="#") Tambah kolom
+                //-   | &nbsp;|&nbsp;
+                //-   a#btn-remove-table-column(href="#") Kurangi kolom
               div.col-flexible.col-md-6.col-sm-6.col-xs-6
                 input.form-control.table-column-names(type="text", maxlength="25")
               div.col-flexible.col-md-6.col-sm-6.col-xs-6

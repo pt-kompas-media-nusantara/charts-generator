@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Penghasil bagan untuk editor Desk Multimedia Harian Kompas - Chart generator for multimedia editors of Kompas Daily, Indonesia">
     <meta name="author" content="Yosef Yudha Wijaya - https://github.com/gajayana">
-    <title>Penghasil Bagan - Balok</title>
+    <title>Penghasil Bagan - Pai</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
   </head>
@@ -23,19 +23,19 @@
         </div>
       </div>
     </nav>
-    <div id="bar-chart" class="container-fluid">
+    <div id="pie-chart" class="container-fluid">
       <div class="row">
         <div class="col-sm-2 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li><a href="index.html">index</a></li>
-            <li class="active"><a href="balok.html">balok<span class="sr-only">(current)</span></a></li>
+            <li><a href="balok.html">balok</a></li>
             <li><a href="kolom.html">kolom</a></li>
-            <li><a href="pai.html">pai</a></li>
+            <li class="active"><a href="pai.html">pai<span class="sr-only">(current)</span></a></li>
           </ul>
         </div>
         <div class="col-sm-10 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <div class="col-md-12 col-sm-12">
-            <h1>Bagan Balok</h1>
+            <h1>Bagan Pai</h1>
           </div>
           <div class="col-md-6 col-sm-6">
             <form class="form-horizontal">
@@ -70,10 +70,33 @@
                   <select id="legend-position" class="form-control">
                     <option value="top">Atas</option>
                     <option value="bottom">Bawah</option>
-                    <option value="in">Di Dalam</option>
+                    <option value="labeled">Berlabel</option>
                     <option value="right">Kanan</option>
                     <option value="left">Kiri</option>
                   </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                  <div class="radio">
+                    <label>
+                      <input id="isStandard" type="radio" name="pieStyle" checked>Bentuk Standar
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                  <div class="radio">
+                    <label>
+                      <input id="is3D" type="radio" name="pieStyle">Bentuk 3D
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                  <div class="radio">
+                    <label>
+                      <input id="isDonut" type="radio" name="pieStyle">Bentuk Donat
+                    </label>
+                  </div>
                 </div>
               </div>
               <h4>Tabel Data</h4>
@@ -82,7 +105,7 @@
                   <label class="control-label">Nama Kolom</label>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-6 txt-right">
-                  <label class="control-label"> <a id="btn-add-table-column" href="#">Tambah kolom</a>&nbsp;|&nbsp;<a id="btn-remove-table-column" href="#">Kurangi kolom</a></label>
+                  <label class="control-label">&nbsp;</label>
                 </div>
                 <div class="col-flexible col-md-6 col-sm-6 col-xs-6">
                   <input type="text" maxlength="25" class="form-control table-column-names">

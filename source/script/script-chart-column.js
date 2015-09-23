@@ -3,13 +3,13 @@
 
 $(document).ready(function () {
 	'use strict';
-	// bar chart
-	function previewBarChart() {
-		var data, options, barChart,
+	// column chart
+	function previewColumnChart() {
+		var data, options, columnChart,
 			// dataTableColumn = [],
 			dataTableRows = [];
 
-		barChart = new google.visualization.BarChart(document.getElementById('result'));
+		columnChart = new google.visualization.ColumnChart(document.getElementById('result'));
 		options = { 
 			'title' : $('#chart-title').val().trim(), 
 			'width': $('#chart-width').val().trim(), 
@@ -37,11 +37,11 @@ $(document).ready(function () {
 		});
 
 		data.addRows(dataTableRows);
-		barChart.draw(data, options);
+		columnChart.draw(data, options);
 		$('#result').next('p').text('Sumber: ' + $('#chart-data-source').val().trim());
 	}
 
-	function initializeBarChart() {
+	function initializeColumnChart() {
 		// submit button
 		$('#btn-submit').on('click', function (e) {
 			e.preventDefault();
@@ -147,15 +147,15 @@ $(document).ready(function () {
 				str += '(function () {\n';
 					
 				str += 'google.load(\'visualization\', \'1\', { \'packages\' : [\'corechart\'] });\n';
-				str += 'google.setOnLoadCallback(drawBarChart);\n';
+				str += 'google.setOnLoadCallback(drawColumnChart);\n';
 
-				str += 'function drawBarChart() {\n';
+				str += 'function drawColumnChart() {\n';
 				str += 'var data = new google.visualization.DataTable();\n';
 				str += strAddColumn;
 				str += strAddRows;
 				str += 'var options = { \'backgroundColor\' : \'#f6f6f6\', \'title\' : \'' + $('#chart-title').val().trim() +'\', \'width\': ' + $('#chart-width').val().trim() + ', \'height\': ' + $('#chart-height').val().trim() + ', \'legend\': { position : \'' + $('#legend-position').val().trim() + '\'} };\n';
-				str += 'var barChart = new google.visualization.BarChart(document.getElementById(\'' + strID + '\'));\n';
-				str += 'barChart.draw(data, options);\n';
+				str += 'var columnChart = new google.visualization.ColumnChart(document.getElementById(\'' + strID + '\'));\n';
+				str += 'columnChart.draw(data, options);\n';
 				str += '}\n';
 
 				str += '}());\n';
@@ -168,7 +168,7 @@ $(document).ready(function () {
 					var contentHeight = $('#chart-code')[0].scrollHeight;
 					$('#chart-code').height(contentHeight-15);
 					$('#chart-code').select();
-					previewBarChart();
+					previewColumnChart();
 				}, 1);
 
 			}
@@ -177,7 +177,7 @@ $(document).ready(function () {
 	}
 
 
-	if($('#bar-chart').length) {
+	if($('#column-chart').length) {
 
 		
 
@@ -289,7 +289,7 @@ $(document).ready(function () {
 			
 		
 		// preview
-		google.setOnLoadCallback(initializeBarChart);
+		google.setOnLoadCallback(initializeColumnChart);
 		
 	}
 });

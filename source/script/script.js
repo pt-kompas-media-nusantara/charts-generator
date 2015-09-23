@@ -3,3 +3,5 @@
 google.load('visualization', '1', { 'packages' : ['corechart'] });
 
 //@prepros-prepend script-chart-bar.js
+//@prepros-prepend script-chart-column.js
+//@prepros-prepend script-chart-pie.js

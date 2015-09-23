@@ -3,13 +3,13 @@
 
 $(document).ready(function () {
 	'use strict';
-	// bar chart
-	function previewBarChart() {
-		var data, options, barChart,
+	// column chart
+	function previewPieChart() {
+		var data, options, pieChart,
 			// dataTableColumn = [],
 			dataTableRows = [];
 
-		barChart = new google.visualization.BarChart(document.getElementById('result'));
+		pieChart = new google.visualization.PieChart(document.getElementById('result'));
 		options = { 
 			'title' : $('#chart-title').val().trim(), 
 			'width': $('#chart-width').val().trim(), 
@@ -18,6 +18,15 @@ $(document).ready(function () {
 				position: $('#legend-position').val().trim()
 			}
 		};
+
+		if ($('#is3D').is(':checked')) {
+			options['is3D'] = true;
+		}
+
+		if ($('#isDonut').is(':checked')) {
+			options['pieHole'] = 0.4;
+		}
+
 		data = new google.visualization.DataTable();
 
 		$('.table-column-names').each(function (index) {
@@ -37,11 +46,11 @@ $(document).ready(function () {
 		});
 
 		data.addRows(dataTableRows);
-		barChart.draw(data, options);
+		pieChart.draw(data, options);
 		$('#result').next('p').text('Sumber: ' + $('#chart-data-source').val().trim());
 	}
 
-	function initializeBarChart() {
+	function initializePieChart() {
 		// submit button
 		$('#btn-submit').on('click', function (e) {
 			e.preventDefault();
@@ -50,7 +59,8 @@ $(document).ready(function () {
 				strAddColumn = '',
 				strAddRows = '',
 				strAddRowsData = '',
-				strID;
+				strID,
+				strPieFormat = '';
 
 			if ($('#chart-title').val().trim() !== '') {
 				$('#chart-title').parent().parent().removeClass('has-error');
@@ -110,8 +120,8 @@ $(document).ready(function () {
 					}
 				});
 			}
-					
-
+			
+			// console.log(allPassed);
 
 			if (allPassed) {
 				// get inputs data
@@ -134,7 +144,15 @@ $(document).ready(function () {
 					
 				strAddRows = 'data.addRows([ ' + strAddRowsData.substring(0, strAddRowsData.length - 1) + ' ]);\n';
 
+				if ($('#is3D').is(':checked')) {
+					strPieFormat = ', \'is3D\' : true';
+				}
 
+				if ($('#isDonut').is(':checked')) {
+					strPieFormat = ', \'pieHole\' : 0.4';
+				}
+
+				
 				// generate code
 				strID = $('#chart-title').val().trim().toLowerCase().replace(/\s/g, '') + '-' + Date.now();
 				str = '<div style="width:' + $('#chart-width').val().trim() + 'px; padding-bottom: 20px;">\n';
@@ -147,28 +165,30 @@ $(document).ready(function () {
 				str += '(function () {\n';
 					
 				str += 'google.load(\'visualization\', \'1\', { \'packages\' : [\'corechart\'] });\n';
-				str += 'google.setOnLoadCallback(drawBarChart);\n';
+				str += 'google.setOnLoadCallback(drawPieChart);\n';
 
-				str += 'function drawBarChart() {\n';
+				str += 'function drawPieChart() {\n';
 				str += 'var data = new google.visualization.DataTable();\n';
 				str += strAddColumn;
 				str += strAddRows;
-				str += 'var options = { \'backgroundColor\' : \'#f6f6f6\', \'title\' : \'' + $('#chart-title').val().trim() +'\', \'width\': ' + $('#chart-width').val().trim() + ', \'height\': ' + $('#chart-height').val().trim() + ', \'legend\': { position : \'' + $('#legend-position').val().trim() + '\'} };\n';
-				str += 'var barChart = new google.visualization.BarChart(document.getElementById(\'' + strID + '\'));\n';
-				str += 'barChart.draw(data, options);\n';
+				str += 'var options = { \'backgroundColor\' : \'#f6f6f6\', \'title\' : \'' + $('#chart-title').val().trim() +'\', \'width\': ' + $('#chart-width').val().trim() + ', \'height\': ' + $('#chart-height').val().trim() + ', \'legend\': { position : \'' + $('#legend-position').val().trim() + '\'}' + strPieFormat + ' };\n';
+				str += 'var pieChart = new google.visualization.PieChart(document.getElementById(\'' + strID + '\'));\n';
+				str += 'pieChart.draw(data, options);\n';
 				str += '}\n';
 
 				str += '}());\n';
 
 				str += '</script>';
 
-				$('#chart-code').text(str).css('overflow', 'hidden');
+				// var parsedStr = $(document.createTextNode(str));
+
+				$('#chart-code').removeAttr('style').css('overflow', 'hidden').text(str).html();
 
 				window.setTimeout(function () {
 					var contentHeight = $('#chart-code')[0].scrollHeight;
 					$('#chart-code').height(contentHeight-15);
 					$('#chart-code').select();
-					previewBarChart();
+					previewPieChart();
 				}, 1);
 
 			}
@@ -177,11 +197,7 @@ $(document).ready(function () {
 	}
 
 
-	if($('#bar-chart').length) {
-
-		
-
-		
+	if($('#pie-chart').length) {
 
 		// add new table column
 		$('#btn-add-table-column').on('click', function (e) {
@@ -289,7 +305,7 @@ $(document).ready(function () {
 			
 		
 		// preview
-		google.setOnLoadCallback(initializeBarChart);
+		google.setOnLoadCallback(initializePieChart);
 		
 	}
 });
