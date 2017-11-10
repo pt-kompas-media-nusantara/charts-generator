@@ -29,19 +29,23 @@ $("#btn-add-table-row").on("click", function(t) {
         e = $("<input>"), 
         a.addClass("col-flexible col-md-" + 12 / i + " col-sm-" + 12 / i + " col-xs-" + 12 / i), 
         e.addClass("form-control table-rows-input"),
-        e.attr("type", "text"), e.attr("placeholder", "Data"),
+        e.attr("type", "text"), e.attr("placeholder", "Data/Angka"),
         a.append(e), n.append(a);
      
-        var aa, ee, ll, rr, 
+        var aa, ee, ll, rr, pp, uu, gg,
             oo = $("<div></div>"),
             nn = $(document.createDocumentFragment()),
             ii = $("#legend-row").children(".col-flexible").length;
         for (oo.addClass("form-group legend-content"),rr = 0; ii > rr; rr++)
         aa = $("<div></div>"), 
-        ee = $("<input>"), 
-        aa.addClass("col-flexible col-md-" + 12 / ii + " col-sm-" + 12 / ii + " col-xs-" + 12 / ii), 
-        ee.addClass("form-control legend-name"),
-        ee.attr("type", "text"), ee.attr("placeholder", "Label Data"),
+        ee = $("<input>"),
+        ll = 0 === rr ? "Label Data" : "Warna",
+        pp = 0 === rr ? "col-flexible col-md-" + 10 + " col-sm-" + 10 + " col-xs-" + 10 : "col-flexible col-md-" + 2 + " col-sm-" + 2 + " col-xs-" + 2,
+        uu = 0 === rr ? "form-control legend-name" : "form-control jscolor",
+        gg = 0 === rr ? "text" : "color",
+        aa.addClass(pp), 
+        ee.addClass(uu),
+        ee.attr("placeholder", ll), ee.attr("type", gg),
         aa.append(ee), nn.append(aa);
      
         s.addClass("btn btn-danger btn-overflow"), 
@@ -58,6 +62,8 @@ $("#btn-add-table-row").on("click", function(t) {
 
 $("#proses-form").submit(function(e){
     var nama_kolom = [];
+    var all_warna = [];
+    var all_warnaa = [];
     var nama_kolomm = [];
     var baris_data = [];
     var nama_legend = [];
@@ -96,10 +102,14 @@ $("#proses-form").submit(function(e){
     $('.table-rows-input').each(function() {
         baris_data.push(this.value);
     });
+    $('.jscolor').each(function() {
+        all_warna.push(this.value);
+        all_warnaa.push('\''+this.value+'\'');
+    });
     var result_int = baris_data.map(function (x) { 
         return parseInt(x, 10); 
     });
-    $(".legend-content input").each(function() {
+    $(".legend-content input.legend-name").each(function() {
         nama_legend.push(this.value);
     });
     
@@ -132,6 +142,7 @@ $("#proses-form").submit(function(e){
     
     function createChart(){
         Highcharts.chart('result', {
+            colors: all_warna,
             chart: {
                 type: $('input[name=jenis]:checked').val()
             },
@@ -191,7 +202,7 @@ $("#proses-form").submit(function(e){
 	code += '<script type="text/javascript">\n';
 
 	code += 'Highcharts.chart(\'result\', {\n';
-	
+	code += 'colors: ['+all_warnaa+'],\n';
 	code += 'chart: {\n'
                 code+= 'type:\''+ $('input[name=jenis]:checked').val() +'\'\n'
             code+='},\n'
