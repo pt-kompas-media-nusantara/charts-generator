@@ -48,10 +48,10 @@
                                 <label class="control-label">Jenih Highcharts</label>
                                 <div>
                                     <label class="radio-inline">
-                                        <input type="radio" name="jenis" value="line" checked="checked">Line
+                                        <input type="radio" name="jenis" value="column" checked="checked">Kolom
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="jenis" value="column">Kolom
+                                        <input type="radio" name="jenis" value="line">Line
                                     </label>
                                     <label class="radio-inline">
                                         <input type="radio" name="jenis" value="bar">Balok
@@ -66,7 +66,7 @@
                         <div id="table-column" class="form-group">
                             <div class="col-md-12 col-sm-12">
                                 <label class="control-label">Judul xAxis</label>
-                                <input type="text" maxlength="25" class="form-control" id="judul_kolom" placeholder="ex: Tahun" maxlength="100">
+                                <input type="text" maxlength="25" class="form-control" id="judul_kolom" placeholder="Text" maxlength="100">
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <label class="control-label">Nama Kolom</label>
@@ -85,16 +85,16 @@
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12">
                                 <label class="control-label">Judul yAxis</label>
-                                <input type="text" maxlength="25" class="form-control" id="judul_baris" placeholder="ex: Jumlah per Tahun" maxlength="100">
+                                <input type="text" maxlength="25" class="form-control" id="judul_baris" placeholder="Text" maxlength="100">
                             </div>
                         </div>
                         <label class="control-label">Baris Data</label>
                         <div class="table-rows form-group series-content" id="table-row-length">
                             <div class="col-flexible col-md-6 col-sm-6 col-xs-6">
-                                <input type="text" placeholder="Data/Angka" maxlength="25" class="form-control table-rows-input">
+                                <input type="text" placeholder="Data/Angka" maxlength="25" class="form-control table-rows-input" value="0">
                             </div>
                             <div class="col-flexible col-md-6 col-sm-6 col-xs-6">
-                                <input type="text" placeholder="Data/Angka" maxlength="25" class="form-control table-rows-input">
+                                <input type="text" placeholder="Data/Angka" maxlength="25" class="form-control table-rows-input" value="0">
                             </div>
                         </div>
                         <div id="new-table-row"></div>
@@ -117,7 +117,7 @@
                                 <input type="text" placeholder="Label Data" maxlength="25" class="form-control legend-name">
                             </div>
                             <div class="col-flexible col-md-2 col-sm-2 col-xs-2">
-                                <input class="form-control jscolor" placeholder="Warna" type="color">
+                                <input class="form-control jscolor" placeholder="Warna" type="color" value="#7cb5ec">
                             </div>
                         </div>
                         <div id="new-new"></div>
@@ -162,7 +162,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-6 col-sm-6 sticky">
                     <div id="result"></div>
                     <p style="display: block; width:100%; font-size: 11px; color: #949494; padding:5px 0; margin:0;"></p>
                 </div>
