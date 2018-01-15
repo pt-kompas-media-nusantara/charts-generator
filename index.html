@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/style.css">
         <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
         <!--<script src="js/jscolor.js"></script>-->
     </head>
     <body>
@@ -33,19 +34,19 @@
                     <form class="form-horizontal" id="proses-form">
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12">
-                                <label for="chart-title" class="control-label">Judul</label>
+                                <h4>Judul</h4>
                                 <input id="chart-title" name="chart-title" placeholder="Judul Highcharts" maxlength="100" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12">
-                                <label for="chart-data-source" class="control-label">Sumber Data</label>
+                                <h4>Sumber Data</h4>
                                 <input id="chart-data-source" name="chart-data-source" placeholder="Sumber data" maxlength="100" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-6">
-                                <label class="control-label">Jenih Highcharts</label>
+                                <h4>Jenih Highcharts</h4>
                                 <div>
                                     <label class="radio-inline">
                                         <input type="radio" name="jenis" value="column" checked="checked">Kolom
@@ -103,10 +104,10 @@
                         </div>
                         <h4>Label/Legenda</h4>
                         <div class="form-group">
-                            <div class="col-md-9 col-sm-9 col-xs-9">
+                            <div class="col-md-10 col-sm-10 col-xs-10">
                                 <label class="control-label">Nama Label (Sesuai dengan baris data)</label>
                             </div>
-                            <div class="col-md-3 col-sm-3 col-xs-3">
+                            <div class="col-md-2 col-sm-2 col-xs-2">
                                 <label class="control-label">Warna</label>
                             </div>
                             
@@ -126,7 +127,7 @@
                                 <label class="control-label">Posisi Legenda</label>
                                 <div>
                                     <label class="radio-inline">
-                                        <input type="radio" name="posisilegend" value="ataskiri" checked="checked">Atas Kiri
+                                        <input type="radio" name="posisilegend" value="ataskiri">Atas Kiri
                                     </label>
                                     <label class="radio-inline">
                                         <input type="radio" name="posisilegend" value="atastengah">Atas Tengah
@@ -138,7 +139,7 @@
                                         <input type="radio" name="posisilegend" value="bawahkiri">Bawah Kiri
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="posisilegend" value="bawahtengah">Bawah Tengah
+                                        <input type="radio" name="posisilegend" value="bawahtengah" checked="checked">Bawah Tengah
                                     </label>
                                     <label class="radio-inline">
                                         <input type="radio" name="posisilegend" value="bawahkanan">Bawah Kanan
@@ -154,7 +155,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <h2>Salin kode berikut:</h2>
+                                <h4>Salin kode berikut:</h4>
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <textarea id="chart-code" class="form-control"></textarea>

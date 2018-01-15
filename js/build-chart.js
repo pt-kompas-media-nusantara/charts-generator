@@ -6,13 +6,29 @@ $("#bar-chart").length && ($("#btn-add-table-column").on("click", function(t) {
         l = $("<input>"),
         r = $("<div></div>"),
         o = $("<input>");
-    ($("#table-column").children(".col-flexible").removeClass("col-md-" + 12 / a + " col-sm-" + 12 / a + " col-xs-" + 12 / a).addClass("col-md-" + 12 / (a + 1) + " col-sm-" + 12 / (a + 1) + " col-xs-" + 12 / (a + 1)), e.addClass("col-flexible col-md-" + 12 / (a + 1) + " col-sm-" + 12 / (a + 1) + " col-xs-" + 12 / (a + 1)), l.addClass("form-control table-column-names"), l.attr("type", "text"), l.attr("maxlength", 25), e.append(l), $("#table-column").append(e), $(".table-rows").children(".col-flexible").removeClass("col-md-" + 12 / a + " col-sm-" + 12 / a + " col-xs-" + 12 / a).addClass("col-md-" + 12 / (a + 1) + " col-sm-" + 12 / (a + 1) + " col-xs-" + 12 / (a + 1)), r.addClass("col-flexible col-md-" + 12 / (a + 1) + " col-sm-" + 12 / (a + 1) + " col-xs-" + 12 / (a + 1)), o.addClass("form-control table-rows-input"), o.attr("type", "text"), o.attr("value", "0"), o.attr("maxlength", 255), r.append(o), $(".table-rows").append(r))
+    var cl = 12/a;
+    var clp = 12/(a+1);
+    // if(clp == 2.4){
+    //     clp = 40;
+    // }
+    // else{
+    //     clp;
+    // }
+    ($("#table-column").children(".col-flexible").removeClass("col-md-" + cl + " col-sm-" + cl + " col-xs-" + cl).addClass("col-md-" + clp + " col-sm-" + clp + " col-xs-" + clp), e.addClass("col-flexible col-md-" + clp + " col-sm-" + clp + " col-xs-" + clp), l.addClass("form-control table-column-names"), l.attr("type", "text"), l.attr("maxlength", 25), e.append(l), $("#table-column").append(e), $(".table-rows").children(".col-flexible").removeClass("col-md-" + cl + " col-sm-" + cl + " col-xs-" + cl).addClass("col-md-" + clp + " col-sm-" + clp + " col-xs-" + clp), r.addClass("col-flexible col-md-" + clp + " col-sm-" + clp + " col-xs-" + clp), o.addClass("form-control table-rows-input"), o.attr("type", "text"), o.attr("value", "0"), o.attr("maxlength", 255), r.append(o), $(".table-rows").append(r))
 }), 
 $("#btn-remove-table-column").on("click", function(t) {
     t.preventDefault();
     var a = $("#table-column").children(".col-flexible").length;
-    a > 2 && ($("#table-column").find(".col-flexible:last-child").remove(), $("#table-column").children(".col-flexible").removeClass("col-md-" + 12 / a + " col-sm-" + 12 / a + " col-xs-" + 12 / a).addClass("col-md-" + 12 / (a - 1) + " col-sm-" + 12 / (a - 1) + " col-xs-" + 12 / (a - 1)), $(".table-rows").each(function() {
-        $(this).find(".col-flexible:last-child").remove(), $(this).children(".col-flexible").removeClass("col-md-" + 12 / a + " col-sm-" + 12 / a + " col-xs-" + 12 / a).addClass("col-md-" + 12 / (a - 1) + " col-sm-" + 12 / (a - 1) + " col-xs-" + 12 / (a - 1))
+    var cl = 12/a;
+    var clp = 12/(a-1);
+    // if(clp == 2.4){
+    //     clp = 40;
+    // }
+    // else{
+    //     clp;
+    // }
+    a > 2 && ($("#table-column").find(".col-flexible:last-child").remove(), $("#table-column").children(".col-flexible").removeClass("col-md-" + cl + " col-sm-" + cl + " col-xs-" + cl).addClass("col-md-" + clp + " col-sm-" + clp + " col-xs-" + clp), $(".table-rows").each(function() {
+        $(this).find(".col-flexible:last-child").remove(), $(this).children(".col-flexible").removeClass("col-md-" + cl + " col-sm-" + cl + " col-xs-" + cl).addClass("col-md-" + clp + " col-sm-" + clp + " col-xs-" + clp)
     }))
 }), 
 $("#btn-add-table-row").on("click", function(t) {
@@ -58,12 +74,15 @@ $("#btn-add-table-row").on("click", function(t) {
             t.preventDefault(), o.remove(), oo.remove()
         })
     }
+    else if(ax > 3){
+        alert('Batas maksimal baris adalah 4');
+    }
     
     
 }))
 
+//proses pembuatan highcharts - live output
 $("input").bind("keyup change", function(e){
-    var theId = $('#chart-title').val().replace(/ /g,'').toLowerCase();
     var nama_kolom = [];
     var all_warna = [];
     var all_warnaa = [];
@@ -149,7 +168,8 @@ $("input").bind("keyup change", function(e){
         Highcharts.chart('result', {
             colors: all_warna,
             chart: {
-                type: $('input[name=jenis]:checked').val()
+                type: $('input[name=jenis]:checked').val(),
+                backgroundColor: null
             },
             title: {
                 text: $('#chart-title').val().trim()
@@ -175,9 +195,9 @@ $("input").bind("keyup change", function(e){
                     overflow: 'justify'
                 }
             },
-            // tooltip: {
-            //     valueSuffix: ' millions'
-            // },
+            tooltip: {
+                shared: true
+            },
             plotOptions: {
                 bar: {
                     dataLabels: {
@@ -189,9 +209,7 @@ $("input").bind("keyup change", function(e){
                 align: alg,
                 verticalAlign: vralg,
                 floating: false,
-                borderWidth: 1,
-                backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-                shadow: true
+                backgroundColor: null
             },
             credits: {
                 enabled: false
@@ -199,68 +217,18 @@ $("input").bind("keyup change", function(e){
             series: data_oke
         });
     }
-    
-    code = '<div style="padding-bottom: 20px;">\n';
-	code += '<div id=\"'+theId+'\"></div>\n';
-	code += '<div>\n';
-	code += '<script src="https://code.highcharts.com/highcharts.js"></script>\n';
-	code += '<script type="text/javascript">\n';
-
-	code += 'Highcharts.chart(\''+theId+'\', {\n';
-	code += 'colors: ['+all_warnaa+'],\n';
-	code += 'chart: {\n';
-                code+= 'type:\''+ $('input[name=jenis]:checked').val() +'\'\n';
-            code+='},\n';
-            code+='title: {\n';
-                code+='text:\''+ $('#chart-title').val().trim()+'\'\n';
-            code+='},\n';
-            code+='subtitle: {\n';
-                code+='text: \''+txt_sumber+'\',\n';
-                code+='align: \'left\',\n';
-                code+='verticalAlign: \'bottom\',\n';
-                code+='floating: false,\n';
-            code+='},\n';
-            code+='xAxis: {\n';
-                code+='categories: ['+nama_kolomm+'],\n';
-                code+='title: {\n';
-                    code+='text:\''+ $('#judul_kolom').val().trim()+'\'\n';
-                code+='}\n';
-            code+='},\n';
-            code+='yAxis: {\n';
-                code+='min: 0,\n';
-                code+='title: {\n';
-                    code+='text:\''+ $('#judul_baris').val().trim()+'\'\n';
-                code+='},\n';
-                code+='labels: {\n';
-                    code+='overflow: \'justify\'\n';
-                code+='}\n';
-            code+='},\n';
-            code+='plotOptions: {\n';
-                code+='bar: {\n';
-                    code+='dataLabels: {\n';
-                        code+='enabled: true\n';
-                    code+='}\n';
-                code+='}\n';
-            code+='},\n';
-            code+='legend: {\n';
-                code+='align:\'' +alg+'\',\n';
-                code+='verticalAlign:\''+ vralg+'\',\n';
-                code+='floating: false,\n';
-                code+='borderWidth: 1,';
-                code+='backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || \'#FFFFFF\'),\n';
-                code+='shadow: true\n';
-            code+='},\n';
-            code+='credits: {enabled: false},\n';
-            code+='series: [\n'+all_data+'\n]\n';
-        code+='});\n';
-		
-
-	code += '</script>';
+    // $('input').each(function() {
+    //     if($(this).val()==''){
+    //         $(this).css('background','#ffe9e9');
+    //     }
+    //     else{
+    //         $(this).css('background','transparent');
+    //     }
+    // });
     createChart();
-    $('#chart-code').text(code).css('height','1200px');
 });
 
-//proses pembuatan highcharts
+//proses pembuatan highcharts - submit
 $("#proses-form").submit(function(e){
     var theId = $('#chart-title').val().replace(/ /g,'').toLowerCase();
     var nama_kolom = [];
@@ -348,7 +316,8 @@ $("#proses-form").submit(function(e){
         Highcharts.chart('result', {
             colors: all_warna,
             chart: {
-                type: $('input[name=jenis]:checked').val()
+                type: $('input[name=jenis]:checked').val(),
+                backgroundColor: null
             },
             title: {
                 text: $('#chart-title').val().trim()
@@ -374,9 +343,9 @@ $("#proses-form").submit(function(e){
                     overflow: 'justify'
                 }
             },
-            // tooltip: {
-            //     valueSuffix: ' millions'
-            // },
+            tooltip: {
+                shared: true
+            },
             plotOptions: {
                 bar: {
                     dataLabels: {
@@ -388,9 +357,7 @@ $("#proses-form").submit(function(e){
                 align: alg,
                 verticalAlign: vralg,
                 floating: false,
-                borderWidth: 1,
-                backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-                shadow: true
+                backgroundColor: null,
             },
             credits: {
                 enabled: false
@@ -398,64 +365,81 @@ $("#proses-form").submit(function(e){
             series: data_oke
         });
     }
-    code = '<div style="padding-bottom: 20px;">\n';
-	code += '<div id=\"'+theId+'\"></div>\n';
-	code += '<div>\n';
-	code += '<script src="https://code.highcharts.com/highcharts.js"></script>\n';
-	code += '<script type="text/javascript">\n';
-
-	code += 'Highcharts.chart(\''+theId+'\', {\n';
-	code += 'colors: ['+all_warnaa+'],\n';
-	code += 'chart: {\n';
-                code+= 'type:\''+ $('input[name=jenis]:checked').val() +'\'\n';
-            code+='},\n';
-            code+='title: {\n';
-                code+='text:\''+ $('#chart-title').val().trim()+'\'\n';
-            code+='},\n';
-            code+='subtitle: {\n';
-                code+='text: \''+txt_sumber+'\',\n';
-                code+='align: \'left\',\n';
-                code+='verticalAlign: \'bottom\',\n';
-                code+='floating: false,\n';
-            code+='},\n';
-            code+='xAxis: {\n';
-                code+='categories: ['+nama_kolomm+'],\n';
-                code+='title: {\n';
-                    code+='text:\''+ $('#judul_kolom').val().trim()+'\'\n';
-                code+='}\n';
-            code+='},\n';
-            code+='yAxis: {\n';
-                code+='min: 0,\n';
-                code+='title: {\n';
-                    code+='text:\''+ $('#judul_baris').val().trim()+'\'\n';
-                code+='},\n';
-                code+='labels: {\n';
-                    code+='overflow: \'justify\'\n';
-                code+='}\n';
-            code+='},\n';
-            code+='plotOptions: {\n';
-                code+='bar: {\n';
-                    code+='dataLabels: {\n';
-                        code+='enabled: true\n';
-                    code+='}\n';
-                code+='}\n';
-            code+='},\n';
-            code+='legend: {\n';
-                code+='align:\'' +alg+'\',\n';
-                code+='verticalAlign:\''+ vralg+'\',\n';
-                code+='floating: false,\n';
-                code+='borderWidth: 1,';
-                code+='backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || \'#FFFFFF\'),\n';
-                code+='shadow: true\n';
-            code+='},\n';
-            code+='credits: {enabled: false},\n';
-            code+='series: [\n'+all_data+'\n]\n';
-        code+='});\n';
-		
-
-	code += '</script>';
+    
+    
+    function createBody(){
+        code ='<div style="padding-bottom: 20px;">\n';
+        code+=' <div id=\"'+theId+'\" style="width: 100%;"></div>\n';
+        code+='</div>\n';
+        code+='<script src="https://code.highcharts.com/highcharts.js"></script>\n';
+        code+='<script type="text/javascript">\n';
+        code+='   Highcharts.chart(\''+theId+'\', {\n';
+        code+='       colors: ['+all_warnaa+'],\n';
+        code+='       chart: {\n';
+        code+='            type:\''+ $('input[name=jenis]:checked').val() +'\',\n';
+        code+='            backgroundColor: null'
+        code+='     },\n';
+        code+='     title: {\n';
+        code+='         text:\''+ $('#chart-title').val().trim()+'\'\n';
+        code+='     },\n';
+        code+='     subtitle: {\n';
+        code+='         text: \''+txt_sumber+'\',\n';
+        code+='         align: \'right\',\n';
+        code+='         verticalAlign: \'bottom\',\n';
+        code+='         floating: false,\n';
+        code+='     },\n';
+        code+='     xAxis: {\n';
+        code+='         categories: ['+nama_kolomm+'],\n';
+        code+='         title: {\n';
+        code+='             text:\''+ $('#judul_kolom').val().trim()+'\'\n';
+        code+='         }\n';
+        code+='     },\n';
+        code+='     yAxis: {\n';
+        code+='         min: 0,\n';
+        code+='         title: {\n';
+        code+='             text:\''+ $('#judul_baris').val().trim()+'\'\n';
+        code+='         },\n';
+        code+='         labels: {\n';
+        code+='             overflow: \'justify\'\n';
+        code+='         }\n';
+        code+='     },\n';
+        code+='     tooltip: {\n';
+        code+='         shared: true \n';
+        code+='     },\n';
+        code+='     plotOptions: {\n';
+        code+='         bar: {\n';
+        code+='             dataLabels: {\n';
+        code+='                 enabled: true\n';
+        code+='             }\n';
+        code+='         }\n';
+        code+='     },\n';
+        code+='     legend: {\n';
+        code+='         align:\'' +alg+'\',\n';
+        code+='         verticalAlign:\''+ vralg+'\',\n';
+        code+='         floating: false,\n';
+        code+='         backgroundColor: null,\n';
+        code+='     },\n';
+        code+='     credits: {enabled: false},\n';
+        code+='     series: [\n'+           all_data+'        ]\n';
+        code+=' });\n';
+    	code+='</script>';
+        
+        $('#chart-code').text(code).css('height','1200px');  
+    }
+    
+    
+    
+    $('input').each(function() {
+        if($(this).val()==''){
+            $(this).css('background','#ffe9e9');
+        }
+        else{
+            $(this).css('background','transparent');
+            createBody();
+        }
+    });
+    
     
     createChart();
-    $('#chart-code').text(code).css('height','1200px');
     e.preventDefault();
 });
