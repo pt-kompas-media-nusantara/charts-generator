@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Penghasil bagan untuk editor Desk Multimedia Harian Kompas - Chart generator for multimedia editors of Kompas Daily, Indonesia">
+        <meta name="author" content="Deny Ramanda">
+        <title>Penghasil Bagan - Balok</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+	    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <!--<script src="js/jscolor.js"></script>-->
+    </head>
+    <body>
+        
+        
+        <div id='app' class="container-fluid">
+            <div class="row min-height-100">
+                <nav class="col-md-1 d-none d-md-block bg-secondary sidebar px-0">
+                  <div class="sidebar-sticky sticky-top pt-5">
+                    <ul class="nav flex-column">
+                      <li class="nav-item" v-on:click.prevent="charts">
+                        <p class="nav-link" v-bind:class="{ active : chartstatus }">
+                            <img src="img/bar-chart.png"></img>
+                            <span>Charts</span>
+                        </p>
+                      </li>
+                      <li class="nav-item" v-on:click.prevent="pieChart">
+                        <p class="nav-link" v-bind:class="{ active : piechartstatus }">
+                            <img src="img/pie-chart.png"></img>
+                            <span>Pie Chart</span>
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </nav>
+                <div id="bar-chart" class="col-md-10 ml-sm-auto col-lg-11 px-4 mt-5">
+                    <div class="row">
+                        <div class="col-12 mb-4">
+                            <h1>{{ chartsnames }}</h1>
+                        </div>
+                        <div class="col-12 check-status" v-bind:class="{ active : chartstatus }">
+                            <div class="row">
+                                <div class="col-6">
+                                    <form class="form-horizontal" id="proses-form" v-on:submit.prevent="submitForm">
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <h4>Jenih Highcharts</h4>
+                                                <div class="form-check form-check-inline" v-for="jenis in jenisHighcharts">
+                                                    <label class="radio-inline">
+                                                        <input type="radio" name="jenis" v-bind:value="jenis.val" checked v-on:change.prevent="onChange" class="form-check-input">{{jenis.txt}}
+                                                    </label>
+                                                </div>
+                                            </div> 
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <h4>Judul</h4>
+                                                <input id="chart-title" name="chart-title" placeholder="Judul Highcharts" maxlength="100" class="form-control" v-on:keyup.prevent="onChange">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <h4>Sumber Data</h4>
+                                                <input id="chart-data-source" name="chart-data-source" placeholder="Sumber data" maxlength="100" class="form-control" v-on:keyup.prevent="onChange">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <h4>Data xAxis <span>- Data Horizontal (tahun, kota,nama benda)</span> </h4>
+                                                <div class="row">
+                                                    <div class="col-12 form-group">
+                                                        <label class="control-label">Judul xAxis</label>
+                                                        <input type="text" maxlength="25" class="form-control" id="judul_kolom" placeholder="Text" maxlength="100" v-on:keyup.prevent="onChange">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <label class="control-label">Nama Kolom</label>
+                                                    </div>
+                                                    <div class="col-6 text-right">
+                                                        <label class="control-label"> 
+                                                            <a id="btn-add-table-column" class="text-success" v-on:click.prevent="addColumn" href="#">Tambah kolom</a>
+                                                            &nbsp;|&nbsp;
+                                                            <a id="btn-remove-table-column" class="text-danger" v-on:click.prevent="removeColumn" href="#">Kurangi kolom</a>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col px-2" v-for="x in column">
+                                                        <input type="text" maxlength="25" class="form-control table-column-names" placeholder="ex: 2016" v-on:keyup.prevent="onChange">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <h4>Data yAxis <span>- Data Vertical (jumlah, orang, kasus, kg)</h4>
+                                                <div class="form-group">
+                                                    <label class="control-label">Judul yAxis</label>
+                                                    <input type="text" maxlength="25" class="form-control" id="judul_baris" placeholder="Text" maxlength="100" v-on:keyup.prevent="onChange">
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <label class="control-label">Baris Data (Angka)</label>
+                                                        </div>
+                                                        <div class="col-6 text-right">
+                                                            <a v-on:click.prevent="addTable" class="text-success" id="btn-add-table-row" href="#">Tambah Baris</a>
+                                                            &nbsp;|&nbsp;
+                                                            <a id="btn-dlt-table-row" class="text-danger" v-on:click.prevent="removeTable" href="#">Kurangi Baris</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="series-content">
+                                                        <div class="table-rows form-group row" v-for="d in row">
+                                                            <div class="col px-2" v-for="x in column">
+                                                                <input type="text" placeholder="Data/Angka" maxlength="25" class="form-control table-rows-input" value="0" v-on:keyup.prevent="onChange">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <h4>Label/Legenda</h4>
+                                                <div class="row">
+                                                    <div class="col-10">
+                                                        <label class="control-label">Nama Label (Sesuai dengan baris data)</label>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <label class="control-label">Warna</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group legend-content row" v-for="d in row">
+                                                    <div class="col-10">
+                                                        <input type="text" placeholder="Label Data" maxlength="25" class="form-control legend-name" v-on:keyup.prevent="onChange">
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <input class="jscolor" placeholder="Warna" type="color" value="#7cb5ec" v-on:change.prevent="onChange">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group row">
+                                                    <div class="col-12">
+                                                        <label class="control-label">Posisi Legenda</label>
+                                                        <div class='radiobutton-list'>
+                                                            <div v-for="data in datalabels" class="form-check form-check-inline">
+                                                                <label class="radio-inline">
+                                                                    <input type="radio" name="posisilegend" v-bind:value="data.dta" checked v-on:change.prevent="onChange" class="form-check-input">{{data.txt}}
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group row">
+                                            <div class="col-12 text-right">
+                                                <button id="btn-submit" type="submit" class="btn btn-success">Bikin Kodenya</button>
+                                                <button type="reset" class="btn btn-light">Setel Ulang</button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <h4>Salin kode berikut:</h4>
+                                            </div>
+                                            <div class="col-12">
+                                                <textarea id="chart-code" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-6">
+                                    <div id="result" class="sticky-top pt-5"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 check-status" v-bind:class="{ active : piechartstatus }">
+                            <div class="row">
+                                <div class="col-6">
+                                    <form class="form-horizontal" v-on:submit.prevent="submitPieForm">
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <h4>Judul</h4>
+                                                <input id="pie-chart-title" name="pie-chart-title" placeholder="Judul Highcharts" maxlength="100" class="form-control" v-on:keyup.prevent="onChangePie">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <h4>Sumber Data</h4>
+                                                <input id="pie-chart-data-source" name="pie-chart-data-source" placeholder="Sumber data" maxlength="100" class="form-control" v-on:keyup.prevent="onChangePie">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <h4>Baris Data</h4>
+                                                <div class="row">
+                                                    <div class="col-5">
+                                                        <label class="control-label">Judul Data</label>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <label class="control-label">Baris Data(Angka)</label>
+                                                    </div>
+                                                    <div class="col-1">
+                                                        <label class="control-label">Warna</label>
+                                                    </div>
+                                                    <div class="col-3 text-right">
+                                                        <a v-on:click.prevent="addTablePie" class="text-success" href="#">Tambah Baris</a>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group pie-data-content row" v-for="d in pierow">
+                                                    <div class="col-5">
+                                                        <input type="text" placeholder="Judul Data" maxlength="25" class="form-control pie-data-title" v-on:keyup.prevent="onChangePie">
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <input type="text" class="form-control pie-data" v-on:keyup.prevent="onChangePie" value="0">
+                                                    </div>
+                                                    <div class="col-1">
+                                                        <input class="jscolorpie" placeholder="Warna" type="color" value="#7cb5ec" v-on:change.prevent="onChangePie">
+                                                    </div>
+                                                    <div class="col-3 text-right">
+                                                        <a class="text-danger" v-on:click.prevent="removeTablePie" href="#">Kurangi Baris</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <h4>Label Data <span>- Berat, Luas, Jumlah, Tahun</span></h4>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label class="control-label">Judul Label Data</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <input id="data-value-name" name="data-value-name" placeholder="ex: Berat" maxlength="100" class="form-control" v-on:keyup.prevent="onChangePie">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <h4>Satuan Data <span>- Sebelum/sesudah data(Rp, Kg/tahun, %, Kasus) - Kosongkan apabila kosong</span></h4>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <label class="control-label">Sebelum data</label>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label class="control-label">Setelah data</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <input id="value-prefix" name="value-prefix" placeholder="ex: Rp" maxlength="100" class="form-control" v-on:keyup.prevent="onChangePie">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <input id="value-suffix" name="value-suffix" placeholder="ex: Kg" maxlength="100" class="form-control" v-on:keyup.prevent="onChangePie">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-12 text-right">
+                                                <button id="btn-submit" type="submit" class="btn btn-success">Bikin Kodenya</button>
+                                                <button type="reset" class="btn btn-light">Setel Ulang</button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-12">
+                                                <h4>Salin kode berikut:</h4>
+                                            </div>
+                                            <div class="col-12">
+                                                <textarea id="chart-code-pie" class="form-control"></textarea>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-6">
+                                    <div id="pieresult" class="sticky-top pt-5"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="https://www.google.com/jsapi" type="text/javascript"></script>
+        <script src="js/vue.js" type="text/javascript"></script>
+    </body>
+</html>

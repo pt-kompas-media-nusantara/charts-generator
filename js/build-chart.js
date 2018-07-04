@@ -292,6 +292,7 @@ $("#proses-form").submit(function(e){
     }
     
     var jml = baris_data.length/$('.series-content').length;
+            console.log(jml);
     for(j=0;j<baris_data.length;j++){
         if(j==jml){
             k=k+1;
