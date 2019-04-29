@@ -48,10 +48,10 @@
                                     <form class="form-horizontal" id="proses-form" v-on:submit.prevent="submitForm">
                                         <div class="form-group row">
                                             <div class="col-12">
-                                                <h4>Jenih Highcharts</h4>
+                                                <h4>Jenis Highcharts</h4>
                                                 <div class="form-check form-check-inline" v-for="jenis in jenisHighcharts">
                                                     <label class="radio-inline">
-                                                        <input type="radio" name="jenis" v-bind:value="jenis.val" checked v-on:change.prevent="onChange" class="form-check-input">{{jenis.txt}}
+                                                        <input type="radio" name="jenis" v-bind:value="jenis.val" v-model="pilihJenis" checked v-on:change.prevent="onChange" class="form-check-input">{{jenis.txt}}
                                                     </label>
                                                 </div>
                                             </div> 
@@ -59,7 +59,7 @@
                                         <div class="form-group row">
                                             <div class="col-12">
                                                 <h4>Judul</h4>
-                                                <input id="chart-title" name="chart-title" placeholder="Judul Highcharts" maxlength="100" class="form-control" v-on:keyup.prevent="onChange">
+                                                <input id="chart-title" name="chart-title" placeholder="Judul Highcharts" maxlength="100" class="form-control" v-on:keyup.prevent="onChange" v-model.trim="charttitle">
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -74,7 +74,7 @@
                                                 <div class="row">
                                                     <div class="col-12 form-group">
                                                         <label class="control-label">Judul xAxis</label>
-                                                        <input type="text" maxlength="25" class="form-control" id="judul_kolom" placeholder="Text" maxlength="100" v-on:keyup.prevent="onChange">
+                                                        <input type="text" maxlength="25" class="form-control" id="judul_kolom" placeholder="Text" maxlength="100" v-on:keyup.prevent="onChange" v-model.trim="judulkolom">
                                                     </div>
                                                 </div>
                                                 <div class="row">
@@ -101,7 +101,7 @@
                                                 <h4>Data yAxis <span>- Data Vertical (jumlah, orang, kasus, kg)</h4>
                                                 <div class="form-group">
                                                     <label class="control-label">Judul yAxis</label>
-                                                    <input type="text" maxlength="25" class="form-control" id="judul_baris" placeholder="Text" maxlength="100" v-on:keyup.prevent="onChange">
+                                                    <input type="text" maxlength="25" class="form-control" id="judul_baris" placeholder="Text" maxlength="100" v-on:keyup.prevent="onChange" v-model.trim="judulbaris">
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="row">
@@ -183,7 +183,7 @@
                         <div class="col-12 check-status" v-bind:class="{ active : piechartstatus }">
                             <div class="row">
                                 <div class="col-6">
-                                    <form class="form-horizontal" v-on:submit.prevent="submitPieForm">
+                                    <form class="form-horizontal" v-on:submit.prevent="submitPieForm" id="pie-form">
                                         <div class="form-group row">
                                             <div class="col-12">
                                                 <h4>Judul</h4>

@@ -23,8 +23,12 @@ var app = new Vue({
             {val: 'bar', txt: 'Balok'},
             {val: 'column', txt: 'Kolom'}
         ],
+        pilihJenis: '',
         chartsnames: '',
+        charttitle: '',
         column: 2,
+        judulkolom: '',
+        judulbaris: '',
         row: 1,
         pierow: 2,
         chartstatus: true,
@@ -94,11 +98,11 @@ var app = new Vue({
                 Highcharts.chart('result', {
                     colors: b,
                     chart: {
-                        type: $('input[name=jenis]:checked').val(),
+                        type: this.pilihJenis,
                         backgroundColor: null
                     },
                     title: {
-                        text: $('#chart-title').val().trim()
+                        text: this.charttitle
                     },
                     subtitle: {
                         text: a,
@@ -109,13 +113,13 @@ var app = new Vue({
                     xAxis: {
                         categories: c,
                         title: {
-                            text: $('#judul_kolom').val().trim()
+                            text: this.judulkolom
                         }
                     },
                     yAxis: {
                         min: 0,
                         title: {
-                            text: $('#judul_baris').val().trim()
+                            text: this.judulbaris
                         },
                         labels: {
                             overflow: 'justify'
@@ -145,59 +149,59 @@ var app = new Vue({
 	    },
 	    createBody(g, h, i, j, k, l, m, n){
                 g ='<div style="padding-bottom: 20px;">\n';
-                g+=' <div id=\"'+h+'\" style="width: 100%;"></div>\n';
+                g+='    <div id=\"'+h+'\" style="width: 100%;"></div>\n';
                 g+='</div>\n';
                 g+='<script src="https://code.highcharts.com/highcharts.js"></script>\n';
                 g+='<script type="text/javascript">\n';
-                g+='   Highcharts.chart(\''+h+'\', {\n';
-                g+='       colors: ['+i+'],\n';
-                g+='       chart: {\n';
-                g+='            type:\''+ $('input[name=jenis]:checked').val() +'\',\n';
+                g+='    Highcharts.chart(\''+h+'\', {\n';
+                g+='        colors: ['+i+'],\n';
+                g+='        chart: {\n';
+                g+='            type:\''+ this.pilihJenis +'\',\n';
                 g+='            backgroundColor: null';
-                g+='     },\n';
-                g+='     title: {\n';
-                g+='         text:\''+ $('#chart-title').val().trim()+'\'\n';
-                g+='     },\n';
-                g+='     subtitle: {\n';
-                g+='         text: \''+j+'\',\n';
-                g+='         align: \'right\',\n';
-                g+='         verticalAlign: \'bottom\',\n';
-                g+='         floating: false,\n';
-                g+='     },\n';
-                g+='     xAxis: {\n';
-                g+='         categories: ['+k+'],\n';
-                g+='         title: {\n';
-                g+='             text:\''+ $('#judul_kolom').val().trim()+'\'\n';
-                g+='         }\n';
-                g+='     },\n';
-                g+='     yAxis: {\n';
-                g+='         min: 0,\n';
-                g+='         title: {\n';
-                g+='             text:\''+ $('#judul_baris').val().trim()+'\'\n';
-                g+='         },\n';
-                g+='         labels: {\n';
-                g+='             overflow: \'justify\'\n';
-                g+='         }\n';
-                g+='     },\n';
-                g+='     tooltip: {\n';
-                g+='         shared: true \n';
-                g+='     },\n';
-                g+='     plotOptions: {\n';
-                g+='         bar: {\n';
-                g+='             dataLabels: {\n';
-                g+='                 enabled: true\n';
-                g+='             }\n';
-                g+='         }\n';
-                g+='     },\n';
-                g+='     legend: {\n';
-                g+='         align:\'' +l+'\',\n';
-                g+='         verticalAlign:\''+ m+'\',\n';
-                g+='         floating: false,\n';
-                g+='         backgroundColor: null,\n';
-                g+='     },\n';
-                g+='     credits: {enabled: false},\n';
-                g+='     series: [\n'+           n+'        ]\n';
-                g+=' });\n';
+                g+='        },\n';
+                g+='        title: {\n';
+                g+='            text:\''+ this.charttitle+'\'\n';
+                g+='        },\n';
+                g+='        subtitle: {\n';
+                g+='            text: \''+j+'\',\n';
+                g+='            align: \'right\',\n';
+                g+='            verticalAlign: \'bottom\',\n';
+                g+='            floating: false,\n';
+                g+='        },\n';
+                g+='        xAxis: {\n';
+                g+='            categories: ['+k+'],\n';
+                g+='            title: {\n';
+                g+='                text:\''+ this.judulkolom+'\'\n';
+                g+='            }\n';
+                g+='        },\n';
+                g+='        yAxis: {\n';
+                g+='            min: 0,\n';
+                g+='            title: {\n';
+                g+='                text:\''+ this.judulbaris+'\'\n';
+                g+='            },\n';
+                g+='            labels: {\n';
+                g+='                overflow: \'justify\'\n';
+                g+='            }\n';
+                g+='        },\n';
+                g+='        tooltip: {\n';
+                g+='            shared: true \n';
+                g+='        },\n';
+                g+='        plotOptions: {\n';
+                g+='            bar: {\n';
+                g+='                dataLabels: {\n';
+                g+='                    enabled: true\n';
+                g+='                }\n';
+                g+='            }\n';
+                g+='        },\n';
+                g+='        legend: {\n';
+                g+='            align:\'' +l+'\',\n';
+                g+='            verticalAlign:\''+ m+'\',\n';
+                g+='            floating: false,\n';
+                g+='            backgroundColor: null,\n';
+                g+='        },\n';
+                g+='        credits: {enabled: false},\n';
+                g+='        series: [\n'+           n+'        ]\n';
+                g+='    });\n';
             	g+='</script>';
                 
                 return $('#chart-code').text(g).css({'height': '1200px', 'font-size': '14px', 'background': 'transparent'});  
@@ -215,8 +219,8 @@ var app = new Vue({
             
             
             var lgd = $('input[name=posisilegend]:checked').val();
-            var alg = this.checkLgdAlign(lgd);
-            var vralg = this.checkLgdValign(lgd);
+                alg = this.checkLgdAlign(lgd);
+                vralg = this.checkLgdValign(lgd);
             
             if($("#chart-data-source").val() != ''){
                 txt_sumber = 'sumber: '+$("#chart-data-source").val().trim();
@@ -241,7 +245,7 @@ var app = new Vue({
             });
             
               
-            var i,j,k=0, a=0, b=[], d=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];
+            var i,j,k=0, a=0, b=[], d=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]];//max 30 baris data
             for(i=0;i<$('.series-content .table-rows').length;i++){
                 b[i] = nama_legend[i];
             }
@@ -270,7 +274,7 @@ var app = new Vue({
             
 	    },
 	    submitForm(){
-	        var theId = $('#chart-title').val().replace(/ /g,'').toLowerCase();
+	        var theId = this.charttitle.replace(/ /g,'').toLowerCase();
             var nama_kolom = [];
             var all_warna = [];
             var all_warnaa = [];
@@ -409,50 +413,51 @@ var app = new Vue({
 	    },
 	    createPieBody(g, h, i, j, n){
                 g ='<div style="padding-bottom: 20px;">\n';
-                g+=' <div id=\"'+h+'\" style="width: 100%;"></div>\n';
+                g+='    <div id=\"'+h+'\" style="width: 100%;"></div>\n';
                 g+='</div>\n';
                 g+='<script src="https://code.highcharts.com/highcharts.js"></script>\n';
                 g+='<script type="text/javascript">\n';
-                
-                g+='   Highcharts.chart(\''+h+'\', {\n';
-                g+='       colors: ['+i+'],\n';
-                g+='     chart: {\n';
-                g+='            plotBackgroundColor: null,\n';
+                g+='    Highcharts.chart(\''+h+'\', {\n';
+                g+='        colors: ['+i+'],\n';
+                g+='        chart: {\n';
+                g+='        plotBackgroundColor: null,\n';
                 g+='            plotBorderWidth: null,\n';
                 g+='            plotShadow: false,\n';
                 g+='            type: \'pie\'\n';
                 g+='        },\n';
-                g+='     title: {\n';
-                g+='         text:\''+ $('#pie-chart-title').val().trim()+'\'\n';
-                g+='     },\n';
-                g+='     subtitle: {\n';
-                g+='         text: \''+j+'\',\n';
-                g+='         align: \'right\',\n';
-                g+='         verticalAlign: \'bottom\',\n';
-                g+='         floating: false,\n';
-                g+='     },\n';
-                g+='    tooltip: {\n';
+                g+='        title: {\n';
+                g+='            text:\''+ $('#pie-chart-title').val().trim()+'\'\n';
+                g+='        },\n';
+                g+='        subtitle: {\n';
+                g+='            text: \''+j+'\',\n';
+                g+='            align: \'right\',\n';
+                g+='            verticalAlign: \'bottom\',\n';
+                g+='            floating: false,\n';
+                g+='        },\n';
+                g+='        tooltip: {\n';
                 g+='            valuePrefix: \''+$('#value-prefix').val()+'\',\n';
                 g+='            valueSuffix: \''+$('#value-suffix').val()+'\',\n';
                 g+='        },\n';
-                g+='     plotOptions: {\n';
+                g+='        plotOptions: {\n';
                 g+='            pie: {\n';
-                g+='                 allowPointSelect: true,\n';
-                g+='                 cursor: \'pointer\',\n';
-                g+='                 dataLabels: {\n';
-                g+='                     enabled: true,\n';
-                g+='                 }\n';
-                g+='             }\n';
-                g+='     },\n';
-                g+='     credits: {enabled: false},\n';
-                g+='    series: [{\n';
+                g+='                allowPointSelect: true,\n';
+                g+='                cursor: \'pointer\',\n';
+                g+='                dataLabels: {\n';
+                g+='                    enabled: true,\n';
+                g+='                }\n';
+                g+='            }\n';
+                g+='        },\n';
+                g+='        credits: {enabled: false},\n';
+                g+='        series: [{\n';
                 g+='            name: \''+$('#data-value-name').val()+'\',\n';
                 g+='            colorByPoint: true,\n';
                 g+='            sliced: true,\n';
                 g+='            selected: true,\n';
-                g+='            data: [\n'+           n+'        ]\n';
-                g+='     }],\n';
-                g+=' });\n';
+                g+='            data:[\n';
+                g+=''+n+'\n';
+                g+='                ]\n';
+                g+='        }],\n';
+                g+='    });\n';
             	g+='</script>';
                 
                 return $('#chart-code-pie').text(g).css({'height': '1200px', 'font-size': '14px', 'background': 'transparent'});  
@@ -492,7 +497,7 @@ var app = new Vue({
                 data_oke.push(JSON.parse('{"name": "'+nama_kolom[jk]+'", "y": '+parseInt(baris_data[jk],10)+', "color": "'+ all_warna[jk] +'"}'));
             }
             
-            $('#chart-code').text('').css({'height': 'auto', 'background': 'transparent'});
+            $('#chart-code-pie').text('').css({'height': 'auto', 'background': 'transparent'});
             this.createPieChart(txt_sumber, data_oke);
 	    },
 	    submitPieForm(){
@@ -528,13 +533,10 @@ var app = new Vue({
             
             var jk, all_data=[], data_oke=[];
             for(jk=0;jk<$('.pie-data-content').length;jk++){
-                all_data.push('{name: \''+nama_kolom[jk]+'\', y: '+baris_data[jk]+', color: \''+all_warna[jk]+'\'}\n');
+                all_data.push('                    {name: \''+nama_kolom[jk]+'\', y: '+baris_data[jk]+', color: \''+all_warna[jk]+'\'}\n');
                 data_oke.push(JSON.parse('{"name": "'+nama_kolom[jk]+'", "y": '+parseInt(baris_data[jk],10)+', "color": "'+ all_warna[jk] +'"}'));
             }
             
-            this.onChangePie();
-            
-            $('#pie-chart-code').text('').css({'height': 'auto', 'background': 'transparent'});
             this.createPieChart(txt_sumber, data_oke);
 	        this.createPieBody(code, theId, all_warnaa, txt_sumber, all_data);
 	        
